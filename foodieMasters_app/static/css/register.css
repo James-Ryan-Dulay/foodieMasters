@@ -1,0 +1,7 @@
+#register_errors {
+	border-radius: 10px;
+}
+
+#register_errors li {
+	padding: 5px;
+}
