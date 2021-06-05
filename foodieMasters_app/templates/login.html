@@ -4,18 +4,21 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		{% load static %}
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 			crossorigin="anonymous"
 		/>
+		<link rel="stylesheet" href="{% static 'css/register.css' %}" />
 		<title>Log In</title>
 	</head>
 	<body>
 		<div class="jumbotron">
 			<h1 class="display-2">Welcome FoodMaster</h1>
-			<form action="">
+			<form action="login_process" method="post">
+				{% csrf_token %}
 				<div class="form-group">
 					<label for="email">Email:</label>
 					<input type="email" class="form-control" name="email" />
@@ -26,6 +29,13 @@
 				</div>
 				<button type="submit" class="btn btn-info mb-5">Login</button>
 			</form>
+			<div class="alert-danger" id="login_error">
+				<ul class="list-unstyled">
+					{% if messages %} {% for message in messages %}
+					<li>{{message}}</li>
+					{% endfor %} {% endif %}
+				</ul>
+			</div>
 			<small class="text-muted"
 				>Not yet registered?
 				<strong><a href="/">Register</a></strong> instead</small
