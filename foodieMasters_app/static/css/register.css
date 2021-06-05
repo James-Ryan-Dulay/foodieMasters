@@ -5,3 +5,11 @@
 #register_errors li {
 	padding: 5px;
 }
+
+#login_error {
+	border-radius: 10px;
+}
+
+#login_error li {
+	padding: 5px;
+}

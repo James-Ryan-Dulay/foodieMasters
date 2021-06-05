@@ -20,6 +20,14 @@ class UserManager(models.Manager):
             errors['confirm_password'] = 'Confirm password did not match password'
         return errors
 
+    def authenticate(self, email, password):
+        users = self.filter(email=email)
+        if not users:
+            return False
+        user = users[0]
+        return bcrypt.checkpw(password.encode(), user.password.encode())
+        
+
 class User(models.Model):
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
@@ -27,6 +35,8 @@ class User(models.Model):
     email = models.EmailField(max_length=255)
     password = models.CharField(max_length=255)
     confirm_password = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     objects = UserManager()
 
