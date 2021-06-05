@@ -29,3 +29,18 @@ def login_process(request):
     if not User.objects.authenticate(email, password):
         messages.error(request, 'email and password did not match our records')
         return redirect('/login')
+    user = User.objects.get(email=email)
+    request.session['user_firstname'] = user.firstname
+    request.session['user_id'] = user.id
+    return redirect('/main')
+
+def main(request):
+    if 'user_id' not in request.session:
+        return HttpResponse('<h1> Please log in to access FoodieMasters main page </h1>')
+    user = User.objects.get(id=request.session['user_id'])
+    return render(request, 'main.html')
+
+def logoff(request):
+    del request.session['user_id']
+    request.session.clear()
+    return redirect('/')
