@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+			crossorigin="anonymous"
+		/>
+
+		<title>Register</title>
+	</head>
+	<body>
+		<div class="jumbotron">
+			<h1 class="display-2">FoodieMasters</h1>
+			<h3 class="display-4">Register Here</h3>
+			<form action="">
+				<div class="form-group">
+					<label for="firstname">Firstname:</label>
+					<input type="text" class="form-control" name="firstname" />
+				</div>
+				<div class="form-group">
+					<label for="lastname">Lastname:</label>
+					<input type="text" class="form-control" name="lastname" />
+				</div>
+				<div class="form-group">
+					<label for="age">Age:</label>
+					<input type="number" class="form-control" name="age" />
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" class="form-control" name="email" />
+				</div>
+				<div class="form-group">
+					<label for="password">Password:</label>
+					<input type="password" class="form-control" name="password" />
+				</div>
+				<div class="form-group">
+					<label for="confirm_password">Confirm Password:</label>
+					<input type="password" class="form-control" name="confirm_password" />
+				</div>
+				<button type="submit" class="btn btn-info mb-5">Submit</button>
+			</form>
+			<small class="text-muted"
+				>Already registered?
+				<strong><a href="/login">Login</a></strong> instead</small
+			>
+		</div>
+	</body>
+</html>
