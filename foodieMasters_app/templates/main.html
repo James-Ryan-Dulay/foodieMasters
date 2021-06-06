@@ -11,15 +11,30 @@
 			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 			crossorigin="anonymous"
 		/>
+		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 		<title>FoodieMasters Main</title>
 	</head>
 	<body>
 		<div class="container-fluid">
-			<nav class="navbar navbar-success bg-light">
-				<a href="" class="navbar-brand">FoodieMasters</a>
-				<p class="h2">Hello, {{request.session.user_firstname}}</p>
-				<a href="/logoff" class="navbar-brand">Logoff</a>
+			<nav class="navbar navbar-dark bg-secondary">
+				<a href="/main" class="navbar-brand"><p class="h1">FoodieMasters</p></a>
+				<p class="h4 text-info">
+					Hello, {{request.session.user_firstname}}!
+					<a href="/post" class="navbar-brand text-warning ml-5">CREATE</a>
+					<a href="/profile" class="navbar-brand text-warning ml-5">PROFILE</a>
+				</p>
+				<a href="/logoff" class="navbar-brand" id="logoff">Logoff</a>
 			</nav>
+			<div class="container-sm">
+				{% for post in posts %}
+				<div class="d-flex mt-5 pd-5 justify-content-lg-center flex-column">
+					<h1 class="display-2">{{post.user}}</h1>
+					<h1 class="display-4 text-dark">{{post.title}}</h1>
+					<p class="h5 text-dark">{{post.description}}</p>
+					<p class="h5 text-dark">{{post.recipe}}</p>
+				</div>
+				{% endfor %}
+			</div>
 		</div>
 	</body>
 </html>
