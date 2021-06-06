@@ -1,3 +1,4 @@
+from re import A
 from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from django.contrib import messages
@@ -36,11 +37,34 @@ def login_process(request):
 
 def main(request):
     if 'user_id' not in request.session:
-        return HttpResponse('<h1> Please log in to access FoodieMasters main page </h1>')
+        return HttpResponse('<h1> Please log in to access FoodieMasters main page. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
     user = User.objects.get(id=request.session['user_id'])
-    return render(request, 'main.html')
+    context = {
+        'posts' : Post.objects.all()
+    }
+    return render(request, 'main.html', context)
 
 def logoff(request):
     del request.session['user_id']
     request.session.clear()
     return redirect('/')
+
+def post(request):
+    if 'user_id' not in request.session:
+        return HttpResponse('<h1> Please log in to access FoodieMasters. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
+    return render(request, 'post.html')
+
+def post_process(request):
+    if 'user_id' not in request.session:
+        return HttpResponse('<h1> Please log in to access FoodieMasters. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
+    errors = Post.objects.post_validate(request.POST)
+    title = request.POST['title']
+    description = request.POST['description']
+    recipe = request.POST['recipe']
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/post')
+    user = User.objects.get(id=request.session['user_id'])
+    Post.objects.create(title=title, description=description, recipe=recipe, user=user)
+    return redirect('/main')

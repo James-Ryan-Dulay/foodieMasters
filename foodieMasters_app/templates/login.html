@@ -11,35 +11,37 @@
 			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 			crossorigin="anonymous"
 		/>
-		<link rel="stylesheet" href="{% static 'css/register.css' %}" />
+		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 		<title>Log In</title>
 	</head>
 	<body>
-		<div class="jumbotron">
-			<h1 class="display-2">Welcome FoodMaster</h1>
-			<form action="login_process" method="post">
-				{% csrf_token %}
-				<div class="form-group">
-					<label for="email">Email:</label>
-					<input type="email" class="form-control" name="email" />
+		<div class="container-sm modal-body d-flex justify-content-center">
+			<div class="jumbotron">
+				<h1 class="display-2">Welcome FoodMaster</h1>
+				<form action="login_process" method="post">
+					{% csrf_token %}
+					<div class="form-group">
+						<label for="email">Email:</label>
+						<input type="email" class="form-control" name="email" />
+					</div>
+					<div class="form-group">
+						<label for="password">Password:</label>
+						<input type="password" class="form-control" name="password" />
+					</div>
+					<button type="submit" class="btn btn-info mb-5">Login</button>
+				</form>
+				<div class="alert-danger" id="login_error">
+					<ul class="list-unstyled">
+						{% if messages %} {% for message in messages %}
+						<li>{{message}}</li>
+						{% endfor %} {% endif %}
+					</ul>
 				</div>
-				<div class="form-group">
-					<label for="password">Password:</label>
-					<input type="password" class="form-control" name="password" />
-				</div>
-				<button type="submit" class="btn btn-info mb-5">Login</button>
-			</form>
-			<div class="alert-danger" id="login_error">
-				<ul class="list-unstyled">
-					{% if messages %} {% for message in messages %}
-					<li>{{message}}</li>
-					{% endfor %} {% endif %}
-				</ul>
+				<small class="text-muted"
+					>Not yet registered?
+					<strong><a href="/">Register</a></strong> instead</small
+				>
 			</div>
-			<small class="text-muted"
-				>Not yet registered?
-				<strong><a href="/">Register</a></strong> instead</small
-			>
 		</div>
 	</body>
 </html>

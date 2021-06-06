@@ -13,3 +13,17 @@
 #login_error li {
 	padding: 5px;
 }
+
+#logoff {
+	color: rgb(255, 0, 0);
+	transition: 0.2s;
+}
+
+#logoff:hover {
+	color: rgb(235, 130, 130);
+	transition: 0.2s;
+}
+
+.container-fluid {
+	padding: 0px;
+}
