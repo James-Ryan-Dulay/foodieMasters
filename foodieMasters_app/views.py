@@ -68,3 +68,12 @@ def post_process(request):
     user = User.objects.get(id=request.session['user_id'])
     Post.objects.create(title=title, description=description, recipe=recipe, user=user)
     return redirect('/main')
+
+def profile(request):
+    if 'user_id' not in request.session:
+        return HttpResponse('<h1> Please log in to access FoodieMasters. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
+    context = {
+        'user': User.objects.get(id=request.session['user_id'])
+    }
+    post = Post.objects.get(id=request.session['user_id'])
+    return render(request, 'profile.html', context)
