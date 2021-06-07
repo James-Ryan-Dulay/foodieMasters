@@ -9,5 +9,6 @@ urlpatterns = [
     path('main', views.main),
     path('logoff', views.logoff),
     path('post/', views.post),
-    path('post_process', views.post_process)
+    path('post_process', views.post_process),
+    path('profile', views.profile)
 ]

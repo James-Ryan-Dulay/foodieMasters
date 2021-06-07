@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		{% load static %}
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+		<title>Profile</title>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<nav class="navbar navbar-dark bg-secondary">
+				<a href="/main" class="navbar-brand"><p class="h1">FoodieMasters</p></a>
+				<p class="h4 text-info">
+					Hello, {{request.session.user_firstname}}!
+					<a href="/edit" class="navbar-brand text-warning ml-5">EDIT</a>
+					<a href="/post" class="navbar-brand text-warning ml-5">CREATE</a>
+				</p>
+				<a href="/logoff" class="navbar-brand" id="logoff">Logoff</a>
+			</nav>
+			<div class="container-sm bg-dark text-light">
+				<div class="row mt-5">
+					<div class="col-2" style="outline: 1px dotted red">img</div>
+					<div class="col-10 p-2">
+						<h1 class="display-3">{{user.firstname}} {{user.lastname}}</h1>
+						<p class="display-5">Age: {{user.age}}</p>
+						<p class="display-5">Email: {{user.email}}</p>
+					</div>
+				</div>
+			</div>
+			{% for post in user.posts.all %}
+			<div class="container-sm bg-info text-dark">
+				<div class="d-flex justify-content-center mt-5">
+					<div class="row mt-5">
+						<div class="col">
+							<h1 class="display-5">{{user.firstname}} {{user.lastname}}</h1>
+							<p class="display-6"><strong>Title:</strong> {{post.title}}</p>
+							<p class="display-6">
+								<strong>Description:</strong> {{post.description}}
+							</p>
+							<p class="display-6"><strong>Recipe:</strong> {{post.recipe}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</body>
+</html>
