@@ -4,19 +4,18 @@
 		<title>Profile</title>
 	</head>
 	<body>
-		<div class="container-fluid">
+		<div class="container-fluid" id="profile_page">
 			<nav class="navbar navbar-dark bg-secondary">
 				<a href="/main" class="navbar-brand"><p class="h1">FoodieMasters</p></a>
 				<p class="h4 text-info">
 					Hello, {{request.session.user_firstname}}!
-					<a href="/edit" class="navbar-brand text-warning ml-5">EDIT</a>
 					<a href="/post" class="navbar-brand text-warning ml-5">CREATE</a>
 				</p>
 				<a href="/logoff" class="navbar-brand" id="logoff">Logoff</a>
 			</nav>
 			<div class="container-sm bg-dark text-light">
 				<div class="row mt-5">
-					<div class="col-2" style="outline: 1px dotted red">img</div>
+					<div class="col-2" style="outline: 1px dotted blue">img</div>
 					<div class="col-10 p-2">
 						<h1 class="display-3">{{user.firstname}} {{user.lastname}}</h1>
 						<p class="display-5">Age: {{user.age}}</p>
@@ -24,7 +23,7 @@
 					</div>
 				</div>
 			</div>
-			{% for post in user.posts.all %}
+			{% for post in user.posts.all reversed %}
 			<div class="container-sm bg-info text-dark">
 				<div class="d-flex justify-content-center mt-5">
 					<div class="row mt-5">
@@ -35,6 +34,9 @@
 								<strong>Description:</strong> {{post.description}}
 							</p>
 							<p class="display-6"><strong>Recipe:</strong> {{post.recipe}}</p>
+                            <a href="/delete_post/{{post.id}}" class="text-danger" id="delete_post">Delete</a>
+                            |
+                            <a href="/edit_post/{{post.id}}" class="text-warning">Edit</a>
 						</div>
 					</div>
 				</div>
