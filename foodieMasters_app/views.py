@@ -75,5 +75,33 @@ def profile(request):
     context = {
         'user': User.objects.get(id=request.session['user_id'])
     }
-    post = Post.objects.get(id=request.session['user_id'])
     return render(request, 'profile.html', context)
+
+def delete_post(request, post_id):
+    to_delete = Post.objects.get(id=post_id)
+    to_delete.delete()
+    return redirect('/profile')
+
+def edit_post(request, edit_id):
+    post = Post.objects.get(id=edit_id)
+    context = {
+        'post' : post
+    }
+    return render(request, 'edit_post.html', context)
+
+def modify_post(request):
+    post_id = request.POST['post_id']
+    errors = Post.objects.post_validate(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect(f'/edit_post/{post_id}')
+    modify_post = Post.objects.get(id=post_id)
+    title = request.POST['title']
+    description = request.POST['description']
+    recipe = request.POST['recipe']
+    modify_post.title = title
+    modify_post.description = description
+    modify_post.recipe = recipe
+    modify_post.save()
+    return redirect('/profile')

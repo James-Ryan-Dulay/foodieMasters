@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'partials/head.html' %}
+		<title>FoodieMasters Main</title>
+	</head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-dark bg-secondary">
+            <a href="/main" class="navbar-brand"><p class="h1">FoodieMasters</p></a>
+            <p class="h4 text-info">
+                Hello, {{request.session.user_firstname}}!
+                <a href="/profile" class="navbar-brand text-warning ml-5">PROFILE</a>
+            </p>
+            <a href="/logoff" class="navbar-brand text-danger">Logoff</a>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        <div class="d-flex mt-5 pd-5 justify-content-lg-center">
+            <form
+                action="/modify_post"
+                method="post"
+                class="p-3 mb-2 bg-secondary text-white"
+            >
+                <h1 class="text-white display-3">POST YOUR FAVORITE FOOD</h1>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Title: {{post.id}}</label>
+                    <input type="text" class="form-control" name="title" value="{{post.title}}"/>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" class="form-control" name="description" value="{{post.description}}"/>
+                </div>
+                <div class="form-group">
+                    <label for="recipe">Recipe:</label>
+                    <textarea
+                        name="recipe"
+                        class="form-control"
+                        cols="30"
+                        rows="10"
+                    >{{post.recipe}}</textarea>
+                </div>
+                <input type="hidden" name='post_id' value="{{post.id}}">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">POST</button>
+                </div>
+            </form>
+        </div>
+        <div class="d-flex mt-5 pd-5 justify-content-lg-center">
+            <div class="alert-danger" id="register_errors">
+                <ul class="list-unstyled">
+                    {% if messages %} {% for message in messages %}
+                    <li>{{message}}</li>
+                    {% endfor %} {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

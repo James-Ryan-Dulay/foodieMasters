@@ -24,6 +24,6 @@
 	transition: 0.2s;
 }
 
-.container-fluid {
-	padding: 0px;
+#delete_post {
+	color: rgb(253, 55, 55);
 }
