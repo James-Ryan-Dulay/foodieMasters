@@ -15,3 +15,5 @@ urlpatterns = [
     path('edit_post/<int:edit_id>', views.edit_post),
     path('modify_post', views.modify_post)
 ]
+
+# comment git fetch test
