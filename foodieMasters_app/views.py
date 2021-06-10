@@ -40,7 +40,9 @@ def main(request):
         return HttpResponse('<h1> Please log in to access FoodieMasters main page. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
     user = User.objects.get(id=request.session['user_id'])
     context = {
-        'posts' : Post.objects.all()
+        'user' : User.objects.all(),
+        'posts' : Post.objects.all(),
+        'comments': Comment.objects.all()
     }
     return render(request, 'main.html', context)
 
@@ -104,4 +106,24 @@ def modify_post(request):
     modify_post.description = description
     modify_post.recipe = recipe
     modify_post.save()
+    return redirect('/profile')
+
+def comment_process(request):
+    user = User.objects.get(id=request.session['user_id'])
+    post = Post.objects.get(id=request.POST['post_id'])
+    print(user)
+    print(post)
+    Comment.objects.create(
+        text=request.POST['comment'], user=user, post=post
+    )
+    return redirect('/main')
+
+def profile_comment_process(request):
+    user = User.objects.get(id=request.session['user_id'])
+    post = Post.objects.get(id=request.POST['post_id'])
+    print(user)
+    print(post)
+    Comment.objects.create(
+        text=request.POST['comment'], user=user, post=post
+    )
     return redirect('/profile')

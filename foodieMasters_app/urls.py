@@ -13,5 +13,7 @@ urlpatterns = [
     path('profile', views.profile),
     path('delete_post/<int:post_id>', views.delete_post),
     path('edit_post/<int:edit_id>', views.edit_post),
-    path('modify_post', views.modify_post)
+    path('modify_post', views.modify_post),
+    path('comment_process', views.comment_process),
+    path('profile_comment_process', views.profile_comment_process)
 ]

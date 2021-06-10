@@ -17,11 +17,50 @@
 			<div class="container-sm">
 				{% for post in posts reversed %}
 				<div class="d-flex mt-5 pd-5 justify-content-lg-center flex-column">
-					<h1 class="display-2">{{post.user}}</h1>
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex align-items-center">
+                                <img src="" alt="" class="img-fluid" style="height: 60px; width: 60px;">
+                                <h1 class="display-2 ml-2">{{post.user}}</h1>
+                            </div>
+                        </div>
+                    </div>
 					<h1 class="display-4 text-dark">{{post.title}}</h1>
 					<p class="h5 text-dark">{{post.description}}</p>
 					<p class="h5 text-dark">{{post.recipe}}</p>
 				</div>
+                <div class="container-fluid mt-1">
+                    <div class="row">
+                        <div class="col">
+                            {% for comment in post.comments.all %}
+                            <div class="d-flex flex-column mt-5" style="border: 1px solid black">
+
+                                <p class="display-5">{{comment.user.firstname}} {{comment.user.lastname}}</p>
+                                <p class="display-5">{{comment.text}}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row mt-5 mb-5">
+                        <div class="col">
+                            <form action="/comment_process" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <p class="display-5">Comments</p>
+                                    <input type="text" class="form-control" name="comment">
+                                    <input type="hidden" name="post_id" value="{{post.id}}">
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="d-flex justify-content-end">
+                                            <button type="submit">Add comment</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 				{% endfor %}
 			</div>
 		</div>

@@ -28,16 +28,59 @@
 				<div class="d-flex justify-content-center mt-5">
 					<div class="row mt-5">
 						<div class="col">
-							<h1 class="display-5">{{user.firstname}} {{user.lastname}}</h1>
+                            <div class="row mb-5">
+                                <div class="col-4">
+                                    <div class="d-flex">
+                                        <img src="" alt="" class="img-fluid" style="width: 60px; height60px; border:1px solid black">
+                                        <h1 class="display-5">{{user.firstname}} {{user.lastname}}</h1>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="d-flex justify-content-end">
+                                        <a href="/edit_post/{{post.id}}" class="text-warning text-right">Edit</a> |
+                                        <a href="/delete_post/{{post.id}}" class="text-danger text-right" id="delete_post">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
 							<p class="display-6"><strong>Title:</strong> {{post.title}}</p>
 							<p class="display-6">
 								<strong>Description:</strong> {{post.description}}
 							</p>
 							<p class="display-6"><strong>Recipe:</strong> {{post.recipe}}</p>
-                            <a href="/delete_post/{{post.id}}" class="text-danger" id="delete_post">Delete</a>
-                            |
-                            <a href="/edit_post/{{post.id}}" class="text-warning">Edit</a>
 						</div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col mb-5 mt-5">
+                                    {% for comment in post.comments.all %}
+                                    <div class="d-flex flex-column mt-1" style="border: 1px solid black">
+                                        <p class="display-5">{{comment.user.firstname}} {{comment.user.lastname}}</p>
+                                        <ul>
+                                            <li style="list-style: none;"><p class="display-5">{{comment.text}}</p></li>
+                                        </ul>
+                                    </div>
+                                    <hr style="height: 1px;">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <form action="/profile_comment_process" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="comment">
+                                            <input type="hidden" name="post_id" value="{{post.id}}">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-3">
+                                                <div class="d-flex justify-content-end">
+                                                    <button type="submit">Add comment</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 				</div>
 			</div>
