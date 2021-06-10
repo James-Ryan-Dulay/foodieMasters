@@ -9,24 +9,23 @@
     <title>Edit Post</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <nav class="navbar navbar-dark bg-secondary">
-            <a href="/main" class="navbar-brand"><p class="h1">FoodieMasters</p></a>
-            <p class="h4 text-info">
-                Hello, {{request.session.user_firstname}}!
-                <a href="/profile" class="navbar-brand text-warning ml-5">PROFILE</a>
-            </p>
-            <a href="/logoff" class="navbar-brand text-danger">Logoff</a>
-        </nav>
+    <nav class="navbar navbar-dark bg-secondary">
+        {% include 'partials/logo.html' %}
+        <p class="h4 text-info">
+            Hello, {{request.session.user_firstname}}!
+            <a href="/profile" class="navbar-brand text-warning ml-5">PROFILE</a>
+        </p>
+        <a href="/logoff" class="navbar-brand text-danger">Logoff</a>
+    </nav>
     </div>
     <div class="container-fluid">
-        <div class="d-flex mt-5 pd-5 justify-content-lg-center">
+        <div class="d-flex justify-content-lg-center">
             <form
                 action="/modify_post"
                 method="post"
-                class="p-3 mb-2 bg-secondary text-white"
+                class="p-3 mt-5 bg-secondary text-white"
             >
-                <h1 class="text-white display-3">POST YOUR FAVORITE FOOD</h1>
+                <h1 class="text-white display-3">EDIT FOOD POST</h1>
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="title">Title: {{post.id}}</label>
@@ -47,7 +46,7 @@
                 </div>
                 <input type="hidden" name='post_id' value="{{post.id}}">
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg">POST</button>
+                    <button type="submit" class="btn btn-primary btn-lg">SAVE CHANGES</button>
                 </div>
             </form>
         </div>

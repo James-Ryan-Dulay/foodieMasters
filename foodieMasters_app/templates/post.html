@@ -4,22 +4,21 @@
 		<title>Log In</title>
 	</head>
 	<body>
+		<nav class="navbar navbar-dark bg-secondary">
+			{% include 'partials/logo.html' %}
+			<p class="h4 text-info">
+				Hello, {{request.session.user_firstname}}!
+				<a href="/profile" class="navbar-brand text-warning ml-5">PROFILE</a>
+			</p>
+			<a href="/logoff" class="navbar-brand text-danger">Logoff</a>
+		</nav>
 		<div class="container-fluid">
-			<nav class="navbar navbar-dark bg-secondary">
-				<a href="/main" class="navbar-brand"><p class="h1">FoodieMasters</p></a>
-				<p class="h4 text-info">
-					Hello, {{request.session.user_firstname}}!
-					<a href="/profile" class="navbar-brand text-warning ml-5">PROFILE</a>
-				</p>
-				<a href="/logoff" class="navbar-brand text-danger">Logoff</a>
-			</nav>
-		</div>
-		<div class="container-fluid">
-			<div class="d-flex mt-5 pd-5 justify-content-lg-center">
+			<div class="d-flex justify-content-lg-center">
 				<form
 					action="/post_process"
 					method="post"
-					class="p-3 mb-2 bg-secondary text-white"
+					class="p-3 mb-2 mt-5 bg-dark text-white"
+					style="border-radius: 20px;"
 				>
 					<h1 class="text-white display-3">POST YOUR FAVORITE FOOD</h1>
 					{% csrf_token %}

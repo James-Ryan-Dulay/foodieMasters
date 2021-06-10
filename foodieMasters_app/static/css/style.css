@@ -1,3 +1,8 @@
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
 #register_errors {
 	border-radius: 10px;
 }
@@ -30,4 +35,12 @@
 
 .img-fluid {
 	border-radius: 20px;
+}
+
+.container-fluid {
+	background-color: #91dae9;
+}
+
+#profile_page {
+	background-color: #91dae9;
 }

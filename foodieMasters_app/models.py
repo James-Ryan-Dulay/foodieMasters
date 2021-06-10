@@ -23,6 +23,18 @@ class UserManager(models.Manager):
             errors['confirm_password'] = 'Confirm password did not match password'
         return errors
 
+    def edit_validate(self, edit):
+        errors = {}
+        if len(edit['firstname']) < 2:
+            errors['firstname'] = 'Firstname should be at least 3 characters'
+        if len(edit['lastname']) < 2:
+            errors['lastname'] = 'Lastname should be at least 3 characters'
+        if int(edit['age']) < 6:
+            errors['age'] = 'You should be at least 6 years old to register'
+        if not EMAIL_REGEX.match(edit['email']):
+            errors['email'] = 'Please type a valid email address'
+        return errors
+
     def authenticate(self, email, password):
         users = self.filter(email=email)
         if not users:
@@ -62,6 +74,7 @@ class Post(models.Model):
     description = models.CharField(max_length=255)
     recipe = models.TextField(default=0)
     user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, related_name='like_post')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
@@ -79,4 +92,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.text} {self.user} {self.post}'
-

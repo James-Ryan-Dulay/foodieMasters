@@ -4,19 +4,19 @@
 		<title>FoodieMasters Main</title>
 	</head>
 	<body>
-		<div class="container-fluid">
-			<nav class="navbar navbar-dark bg-secondary">
-				<a href="/main" class="navbar-brand"><p class="h1">FoodieMasters</p></a>
-				<p class="h4 text-info">
-					Hello, {{request.session.user_firstname}}!
-					<a href="/post" class="navbar-brand text-warning ml-5">CREATE</a>
-					<a href="/profile" class="navbar-brand text-warning ml-5">PROFILE</a>
-				</p>
-				<a href="/logoff" class="navbar-brand" id="logoff">Logoff</a>
-			</nav>
+        <nav class="navbar navbar-dark bg-secondary">
+            {% include 'partials/logo.html' %}
+            <p class="h4 text-info">
+                Hello, {{request.session.user_firstname}}!
+                <a href="/post" class="navbar-brand text-warning ml-5">CREATE</a>
+                <a href="/profile" class="navbar-brand text-warning ml-5">PROFILE</a>
+            </p>
+            <a href="/logoff" class="navbar-brand" id="logoff">Logoff</a>
+        </nav>
+		<div class="container-fluid pt-5">
 			<div class="container-sm">
 				{% for post in posts reversed %}
-				<div class="d-flex mt-5 pd-5 justify-content-lg-center flex-column">
+				<div class="d-flex pd-5 justify-content-lg-center flex-column" style="border: 1px solid black">
                     <div class="row">
                         <div class="col">
                             <div class="d-flex align-items-center">
@@ -28,13 +28,21 @@
 					<h1 class="display-4 text-dark">{{post.title}}</h1>
 					<p class="h5 text-dark">{{post.description}}</p>
 					<p class="h5 text-dark">{{post.recipe}}</p>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="d-flex justify-content-between p-2">
+                                {% load static %}
+                                <a href="/like/{{post.id}}" class="btn btn-info"><img src="{% static 'img/like.png' %}" style='height:30px; width:30px;' alt=""></a>
+                                <p class="display-5">{{post.likes.count}} liked this post</p>
+                            </div>
+                        </div>
+                    </div>
 				</div>
                 <div class="container-fluid mt-1">
                     <div class="row">
                         <div class="col">
                             {% for comment in post.comments.all %}
                             <div class="d-flex flex-column mt-5" style="border: 1px solid black">
-
                                 <p class="display-5">{{comment.user.firstname}} {{comment.user.lastname}}</p>
                                 <p class="display-5">{{comment.text}}</p>
                             </div>

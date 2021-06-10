@@ -40,9 +40,8 @@ def main(request):
         return HttpResponse('<h1> Please log in to access FoodieMasters main page. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
     user = User.objects.get(id=request.session['user_id'])
     context = {
-        'user' : User.objects.all(),
+        'user' : user,
         'posts' : Post.objects.all(),
-        'comments': Comment.objects.all()
     }
     return render(request, 'main.html', context)
 
@@ -75,7 +74,8 @@ def profile(request):
     if 'user_id' not in request.session:
         return HttpResponse('<h1> Please log in to access FoodieMasters. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
     context = {
-        'user': User.objects.get(id=request.session['user_id'])
+        'user': User.objects.get(id=request.session['user_id']),
+        'posts': Post.objects.all()
     }
     return render(request, 'profile.html', context)
 
@@ -127,3 +127,34 @@ def profile_comment_process(request):
         text=request.POST['comment'], user=user, post=post
     )
     return redirect('/profile')
+
+def edit_profile(request):
+    user = User.objects.get(id=request.session['user_id'])
+    context = {
+        'user': user
+    }
+    return render(request, 'edit_profile.html', context)
+
+def edit_profile_process(request, user_id):
+    errors = User.objects.edit_validate(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect(f'/edit_profile')
+    firstname = request.POST['firstname']
+    lastname = request.POST['lastname']
+    age = request.POST['age']
+    email = request.POST['email']
+    user = User.objects.get(id=user_id)
+    user.firstname = firstname
+    user.lastname = lastname
+    user.age = age
+    user.email = email
+    user.save()
+    return redirect('/profile')
+
+def like_post(request, post_id):
+    user = User.objects.get(id=request.session['user_id'])
+    post = Post.objects.get(id=post_id)
+    user.like_post.add(post)
+    return redirect('/main')
