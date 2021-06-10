@@ -15,41 +15,57 @@
 		<title>Register</title>
 	</head>
 	<body>
+		<nav class="navbar navbar-dark bg-secondary">
+			{% include 'partials/logo.html' %}
+			<p class="h4 text-info">
+				Hello, {{request.session.user_firstname}}!
+				<a href="/post" class="navbar-brand text-warning ml-5">CREATE</a>
+				<a href="/profile" class="navbar-brand text-warning ml-5">PROFILE</a>
+			</p>
+			<a href="/logoff" class="navbar-brand" id="logoff">Logoff</a>
+		</nav>
 		<div class="container-sm modal-body d-flex justify-content-center">
-			<div class="jumbotron" style="border-radius: 20px">
-				<h1 class="display-2">FoodieMasters</h1>
-				<h3 class="display-4">Register Here</h3>
-				<form action="register_process" method="post">
+			<div class="jumbotron">
+				<h1 class="display-2">FoodieMaster</h1>
+				<form action="edit_profile_process/{{user.id}}" method="post">
 					{% csrf_token %}
 					<div class="form-group">
-						<label for="firstname">Firstname:</label>
-						<input type="text" class="form-control" name="firstname" />
+						<label for="firstname">Firstname: {{user.id}}</label>
+						<input
+							type="text"
+							class="form-control"
+							name="firstname"
+							value="{{user.firstname}}"
+						/>
 					</div>
 					<div class="form-group">
 						<label for="lastname">Lastname:</label>
-						<input type="text" class="form-control" name="lastname" />
+						<input
+							type="text"
+							class="form-control"
+							name="lastname"
+							value="{{user.lastname}}"
+						/>
 					</div>
 					<div class="form-group">
 						<label for="age">Age:</label>
-						<input type="number" class="form-control" name="age" value="5" />
+						<input
+							type="number"
+							class="form-control"
+							name="age"
+							value="{{user.age}}"
+						/>
 					</div>
 					<div class="form-group">
 						<label for="email">Email:</label>
-						<input type="email" class="form-control" name="email" />
-					</div>
-					<div class="form-group">
-						<label for="password">Password:</label>
-						<input type="password" class="form-control" name="password" />
-					</div>
-					<div class="form-group">
-						<label for="confirm_password">Confirm Password:</label>
 						<input
-							type="password"
+							type="email"
 							class="form-control"
-							name="confirm_password"
+							name="email"
+							value="{{user.email}}"
 						/>
 					</div>
-					<button type="submit" class="btn btn-info mb-5">Submit</button>
+					<button type="submit" class="btn btn-info mb-5">Update</button>
 				</form>
 				<div class="alert-danger" id="register_errors">
 					<ul class="list-unstyled">
@@ -58,10 +74,6 @@
 						{% endfor %} {% endif %}
 					</ul>
 				</div>
-				<small class="text-muted"
-					>Already registered?
-					<strong><a href="/login">Login</a></strong> instead</small
-				>
 			</div>
 		</div>
 	</body>

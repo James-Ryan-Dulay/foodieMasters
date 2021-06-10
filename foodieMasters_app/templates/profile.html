@@ -4,41 +4,44 @@
 		<title>Profile</title>
 	</head>
 	<body>
+        <nav class="navbar navbar-dark bg-secondary">
+            {% include 'partials/logo.html' %}
+            <p class="h4 text-info">
+                Hello, {{user.firstname}}!
+                <a href="/post" class="navbar-brand text-warning ml-5">CREATE</a>
+            </p>
+            <a href="/logoff" class="navbar-brand" id="logoff">Logoff</a>
+        </nav>
 		<div class="container-fluid" id="profile_page">
-			<nav class="navbar navbar-dark bg-secondary">
-				<a href="/main" class="navbar-brand"><p class="h1">FoodieMasters</p></a>
-				<p class="h4 text-info">
-					Hello, {{request.session.user_firstname}}!
-					<a href="/post" class="navbar-brand text-warning ml-5">CREATE</a>
-				</p>
-				<a href="/logoff" class="navbar-brand" id="logoff">Logoff</a>
-			</nav>
-			<div class="container-sm bg-dark text-light">
-				<div class="row mt-5">
+			<div class="container-sm pt-5">
+				<div class="row bg-dark text-light">
 					<div class="col-2" style="outline: 1px dotted blue">img</div>
 					<div class="col-10 p-2">
-						<h1 class="display-3">{{user.firstname}} {{user.lastname}}</h1>
+                        <div class="d-flex justify-content-between">
+                            <h1 class="display-3">{{user.firstname}} {{user.lastname}}</h1>
+                            <a href="/edit_profile" class="btn btn-sm btn-warning" style="height: 33px; border-radius: 20px">Update your information</a>
+                        </div>
 						<p class="display-5">Age: {{user.age}}</p>
 						<p class="display-5">Email: {{user.email}}</p>
 					</div>
 				</div>
 			</div>
 			{% for post in user.posts.all reversed %}
-			<div class="container-sm bg-info text-dark">
+			<div class="container-sm bg-dark text-light">
 				<div class="d-flex justify-content-center mt-5">
 					<div class="row mt-5">
 						<div class="col">
                             <div class="row mb-5">
                                 <div class="col-4">
                                     <div class="d-flex">
-                                        <img src="" alt="" class="img-fluid" style="width: 60px; height60px; border:1px solid black">
-                                        <h1 class="display-5">{{user.firstname}} {{user.lastname}}</h1>
+                                        <img src="" alt="" class="img-fluid" style="width: 60px; height:60px; border:1px solid black">
+                                        <h1 class="display-5 mt-1 ml-2">{{user.firstname}} {{user.lastname}}</h1>
                                     </div>
                                 </div>
                                 <div class="col-8">
                                     <div class="d-flex justify-content-end">
-                                        <a href="/edit_post/{{post.id}}" class="text-warning text-right">Edit</a> |
-                                        <a href="/delete_post/{{post.id}}" class="text-danger text-right" id="delete_post">Delete</a>
+                                        <a href="/edit_post/{{post.id}}" class="text-warning text-right mr-1">Edit</a> |
+                                        <a href="/delete_post/{{post.id}}" class="text-danger text-right ml-1" id="delete_post">Delete</a>
                                     </div>
                                 </div>
                             </div>
@@ -47,6 +50,7 @@
 								<strong>Description:</strong> {{post.description}}
 							</p>
 							<p class="display-6"><strong>Recipe:</strong> {{post.recipe}}</p>
+                            <p class="display-5">{{post.likes.count}} liked this post</p>
 						</div>
                         <div class="container-fluid">
                             <div class="row">
