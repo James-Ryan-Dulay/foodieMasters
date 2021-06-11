@@ -37,10 +37,7 @@
 	border-radius: 20px;
 }
 
-.container-fluid {
-	background-color: #91dae9;
-}
-
-#profile_page {
-	background-color: #91dae9;
+.footer_img {
+	width: 100px;
+	height: 50px;
 }
