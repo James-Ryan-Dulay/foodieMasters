@@ -131,7 +131,7 @@ def profile_comment_process(request):
 def edit_profile(request):
     user = User.objects.get(id=request.session['user_id'])
     context = {
-        'user': user
+        'user': user,
     }
     return render(request, 'edit_profile.html', context)
 
@@ -151,6 +151,7 @@ def edit_profile_process(request, user_id):
     user.age = age
     user.email = email
     user.save()
+
     return redirect('/profile')
 
 def like_post(request, post_id):
@@ -158,3 +159,12 @@ def like_post(request, post_id):
     post = Post.objects.get(id=post_id)
     user.like_post.add(post)
     return redirect('/main')
+
+def add_profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    print(user_id)
+    print(user)
+    print('gets here')
+    user_image = Upload(file=request.FILES['profile_image'], user=user)
+    user_image.save()
+    return redirect('/edit_profile')

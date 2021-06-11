@@ -58,6 +58,12 @@ class User(models.Model):
     def __str__(self):
         return f'{self.firstname} {self.lastname}'
 
+class Upload(models.Model):
+    file = models.FileField(upload_to='user_images')
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='upload')
+
 class PostManager(models.Manager):
     def post_validate(self, post_data):
         errors = {}

@@ -3,7 +3,7 @@
     {% include 'partials/head.html' %}
 		<title>FoodieMasters Main</title>
 	</head>
-	<body>
+	<body class="bg-info">
         <nav class="navbar navbar-dark bg-secondary">
             {% include 'partials/logo.html' %}
             <p class="h4 text-info">
@@ -16,7 +16,7 @@
 		<div class="container-fluid pt-5">
 			<div class="container-sm">
 				{% for post in posts reversed %}
-				<div class="d-flex pd-5 justify-content-lg-center flex-column" style="border: 1px solid black">
+				<div class="d-flex p-5 justify-content-lg-center flex-column mb-5" style="border: 5px solid black; border-style: outset;">
                     <div class="row">
                         <div class="col">
                             <div class="d-flex align-items-center">
@@ -28,49 +28,57 @@
 					<h1 class="display-4 text-dark">{{post.title}}</h1>
 					<p class="h5 text-dark">{{post.description}}</p>
 					<p class="h5 text-dark">{{post.recipe}}</p>
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                <p class="h5 text-dark">{{post.created_at}}</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row mt-3">
                         <div class="col">
                             <div class="d-flex justify-content-between p-2">
                                 {% load static %}
-                                <a href="/like/{{post.id}}" class="btn btn-info"><img src="{% static 'img/like.png' %}" style='height:30px; width:30px;' alt=""></a>
+                                <a href="/like/{{post.id}}" class="btn btn-warning"><img src="{% static 'img/like.png' %}" style='height:30px; width:30px;' alt=""></a>
                                 <p class="display-5">{{post.likes.count}} liked this post</p>
                             </div>
                         </div>
                     </div>
-				</div>
-                <div class="container-fluid mt-1">
                     <div class="row">
                         <div class="col">
                             {% for comment in post.comments.all %}
-                            <div class="d-flex flex-column mt-5" style="border: 1px solid black">
+                            <div class="d-flex flex-column mt-5 p-2" style="border: 1px solid black">
                                 <p class="display-5">{{comment.user.firstname}} {{comment.user.lastname}}</p>
                                 <p class="display-5">{{comment.text}}</p>
                             </div>
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="row mt-5 mb-5">
-                        <div class="col">
-                            <form action="/comment_process" method="post">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <p class="display-5">Comments</p>
-                                    <input type="text" class="form-control" name="comment">
-                                    <input type="hidden" name="post_id" value="{{post.id}}">
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="d-flex justify-content-end">
-                                            <button type="submit">Add comment</button>
+                    <div class="container-fluid mt-1">
+                        <div class="row mt-5 mb-5">
+                            <div class="col">
+                                <form action="/comment_process" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <p class="display-5">Comments</p>
+                                        <input type="text" class="form-control" name="comment">
+                                        <input type="hidden" name="post_id" value="{{post.id}}">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit">Add comment</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
+				</div>
 				{% endfor %}
 			</div>
 		</div>
+        {% include 'partials/footer.html' %}
 	</body>
 </html>
