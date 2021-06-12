@@ -8,3 +8,11 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'recipe', 'user')
+
+@admin.register(Upload)
+class UploadAdmin(admin.ModelAdmin):
+    list_display = ('file', 'user')
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('text','user','post')

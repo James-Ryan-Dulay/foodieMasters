@@ -4,7 +4,7 @@
 		<title>FoodieMasters Main</title>
 	</head>
 	<body class="bg-info">
-        <nav class="navbar navbar-dark bg-secondary">
+        <nav class="navbar navbar-dark bg-secondary fixed-top">
             {% include 'partials/logo.html' %}
             <p class="h4 text-info">
                 Hello, {{request.session.user_firstname}}!
@@ -13,19 +13,26 @@
             </p>
             <a href="/logoff" class="navbar-brand" id="logoff">Logoff</a>
         </nav>
-		<div class="container-fluid pt-5">
+		<div class="container-fluid pt-5 mt-5">
 			<div class="container-sm">
 				{% for post in posts reversed %}
-				<div class="d-flex p-5 justify-content-lg-center flex-column mb-5" style="border: 5px solid black; border-style: outset;">
+				<div class="d-flex p-5 justify-content-lg-center flex-column mb-5" style="border: 5px solid black; border-style: outset; box-shadow:2px 2px 5px black;">
                     <div class="row">
                         <div class="col">
                             <div class="d-flex align-items-center">
-                                <img src="" alt="" class="img-fluid" style="height: 60px; width: 60px;">
+                                <img src="/media/{{post.user.upload.file}}" alt="" class="img-fluid" style="height: 90px; width: 90px; border:1px solid white;">
                                 <h1 class="display-2 ml-2">{{post.user}}</h1>
                             </div>
                         </div>
                     </div>
 					<h1 class="display-4 text-dark">{{post.title}}</h1>
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-center">
+                                <img src="/media/{{post.food_upload.file}}" class="m-5" style="width: 500px; height: 300px; border: 2px solid black" alt="">
+                            </div>
+                        </div>
+                    </div>
 					<p class="h5 text-dark">{{post.description}}</p>
 					<p class="h5 text-dark">{{post.recipe}}</p>
                     <div class="row">
@@ -40,19 +47,38 @@
                             <div class="d-flex justify-content-between p-2">
                                 {% load static %}
                                 <a href="/like/{{post.id}}" class="btn btn-warning"><img src="{% static 'img/like.png' %}" style='height:30px; width:30px;' alt=""></a>
-                                <p class="display-5">{{post.likes.count}} liked this post</p>
+                                <p class="display-5 p-2" style="border: 1px solid white;">{{post.likes.count}} liked this post</p>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-secondary comment">Show all comments</button>
+                                    </div>
+                                </div>
+                            </div>
                             {% for comment in post.comments.all %}
-                            <div class="d-flex flex-column mt-5 p-2" style="border: 1px solid black">
-                                <p class="display-5">{{comment.user.firstname}} {{comment.user.lastname}}</p>
+                            <div class="show mt-5" style="border: 1px solid black; box-shadow:2px 2px 2px white; display:none;">
+                                <div class="d-flex">
+                                    <img src="/media/{{comment.user.upload.file}}" class="mr-1" style="height: 30px; width: 30px; border:1px solid white; border-radius:10px;" alt="{{comments.user.firstname}}">
+                                    <p class="display-5">{{comment.user.firstname}} {{comment.user.lastname}}</p>
+                                </div>
                                 <p class="display-5">{{comment.text}}</p>
+                                {% if request.session.user_id == comment.user_id %}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="d-flex justify-content-end">
+                                            <a class="btn btn-danger m-2" href="delete_comment/{{comment.id}}">delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
                             </div>
                             {% endfor %}
-                        </div>
+                    </div>
                     </div>
                     <div class="container-fluid mt-1">
                         <div class="row mt-5 mb-5">
@@ -61,13 +87,13 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <p class="display-5">Comments</p>
-                                        <input type="text" class="form-control" name="comment">
+                                        <input type="text" class="form-control" name="comment" required>
                                         <input type="hidden" name="post_id" value="{{post.id}}">
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="d-flex justify-content-end">
-                                                <button type="submit">Add comment</button>
+                                                <button class="btn btn-primary" type="submit">Add comment</button>
                                             </div>
                                         </div>
                                     </div>
@@ -80,5 +106,6 @@
 			</div>
 		</div>
         {% include 'partials/footer.html' %}
+        {% include 'partials/jquery.html' %}
 	</body>
 </html>

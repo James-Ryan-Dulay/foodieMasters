@@ -60,9 +60,10 @@ class User(models.Model):
 
 class Upload(models.Model):
     file = models.FileField(upload_to='user_images')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='upload')
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='upload')
+
 
 class PostManager(models.Manager):
     def post_validate(self, post_data):
@@ -88,6 +89,12 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.user}'
+
+class Postimg(models.Model):
+    file = models.FileField(upload_to='post_images')
+    post = models.OneToOneField(Post, on_delete=models.CASCADE, primary_key=True, related_name='food_upload')
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
 class Comment(models.Model):
     text = models.CharField(max_length=255)
