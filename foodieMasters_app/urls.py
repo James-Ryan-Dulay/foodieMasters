@@ -19,5 +19,8 @@ urlpatterns = [
     path('edit_profile', views.edit_profile ),
     path('edit_profile_process/<int:user_id>', views.edit_profile_process),
     path('like/<int:post_id>', views.like_post),
-    path('add_profile/<int:user_id>', views.add_profile)
+    path('add_profile/<int:user_id>', views.add_profile),
+    path('add_post_image/<int:post_id>', views.post_image),
+    path('delete_comment/<int:comment_id>', views.delete_comment),
+    path('profile/delete_comment/<int:comment_id>', views.profile_comment)
 ]

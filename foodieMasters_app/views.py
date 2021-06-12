@@ -2,6 +2,10 @@ from re import A
 from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from django.contrib import messages
+import requests
+
+api = 'http://www.recipepuppy.com/api/?i=onions,garlic&q=omelet&p=3'
+
 # Create your views here.
 def register(request):
     return render(request, 'register.html')
@@ -39,9 +43,13 @@ def main(request):
     if 'user_id' not in request.session:
         return HttpResponse('<h1> Please log in to access FoodieMasters main page. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
     user = User.objects.get(id=request.session['user_id'])
+    print(request.session['user_id'])
+    r = requests.get(api)
+    r = r.json()
+    results = r['results']
     context = {
-        'user' : user,
         'posts' : Post.objects.all(),
+        'results': results
     }
     return render(request, 'main.html', context)
 
@@ -168,3 +176,21 @@ def add_profile(request, user_id):
     user_image = Upload(file=request.FILES['profile_image'], user=user)
     user_image.save()
     return redirect('/edit_profile')
+
+def post_image(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post_image = Postimg(file=request.FILES['post_image'], post=post)
+    post_image.save()
+    print(post_id)
+    return redirect(f'/edit_post/{post_id}')
+
+def delete_comment(request, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    return redirect('/main')
+
+def profile_comment(request, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    return redirect('/profile')
+
