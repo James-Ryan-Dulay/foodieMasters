@@ -2,9 +2,6 @@ from re import A
 from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from django.contrib import messages
-import requests
-
-api = 'http://www.recipepuppy.com/api/?i=onions,garlic&q=omelet&p=3'
 
 # Create your views here.
 def register(request):
@@ -43,13 +40,8 @@ def main(request):
     if 'user_id' not in request.session:
         return HttpResponse('<h1> Please log in to access FoodieMasters main page. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
     user = User.objects.get(id=request.session['user_id'])
-    print(request.session['user_id'])
-    r = requests.get(api)
-    r = r.json()
-    results = r['results']
     context = {
         'posts' : Post.objects.all(),
-        'results': results
     }
     return render(request, 'main.html', context)
 
