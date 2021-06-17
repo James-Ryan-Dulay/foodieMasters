@@ -4,6 +4,9 @@ from .models import *
 from django.contrib import messages
 
 # Create your views here.
+def welcome(request):
+    return render(request, 'welcome.html')
+
 def register(request):
     return render(request, 'register.html')
 

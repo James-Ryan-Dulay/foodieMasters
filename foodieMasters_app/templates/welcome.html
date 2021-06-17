@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+	{% include 'partials/head.html' %}
+	<body class="bg-info">
+		<div class="container p-5">
+			<div class="d-flex align-items-center justify-content-center flex-column">
+				{% load static %}
+				<img class="img-fluid" src="{% static 'img/app_icon.png' %}" alt="" />
+				<h1 class="h1 p-2">Welcome to FoodieMasters</h1>
+				<div class="p-5">
+					<a href="/register" class="btn btn-primary mr-2">Register</a>
+					<a href="/login" class="btn btn-primary ml-2">Login</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

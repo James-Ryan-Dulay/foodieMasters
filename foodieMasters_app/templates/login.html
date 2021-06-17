@@ -15,8 +15,16 @@
 		<title>Log In</title>
 	</head>
 	<body class="bg-info">
-		<div class="container-sm modal-body d-flex justify-content-center">
+		<div class="container modal-body d-flex justify-content-center">
 			<div class="jumbotron" style="border-radius: 20px">
+				<div class="d-flex justify-content-center">
+					{% load static %}
+					<img
+						src="{% static 'img/app_icon.png' %}"
+						style="width: 60px; height: 60px"
+						alt=""
+					/>
+				</div>
 				<h1 class="display-2">Welcome FoodMaster</h1>
 				<form action="login_process" method="post">
 					{% csrf_token %}
@@ -39,7 +47,7 @@
 				</div>
 				<small class="text-muted"
 					>Not yet registered?
-					<strong><a href="/">Register</a></strong> instead</small
+					<strong><a href="/register">Register</a></strong> instead</small
 				>
 			</div>
 		</div>
