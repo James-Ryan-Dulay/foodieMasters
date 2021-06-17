@@ -56,7 +56,10 @@ def logoff(request):
 def post(request):
     if 'user_id' not in request.session:
         return HttpResponse('<h1> Please log in to access FoodieMasters. </br> Back to login page <a href="/login">Login</a> or register instead <a href="/">register</a> </h1>')
-    return render(request, 'post.html')
+    context = {
+        'posts': Post.objects.all()
+    }
+    return render(request, 'post.html', context)
 
 def post_process(request):
     if 'user_id' not in request.session:
@@ -176,7 +179,6 @@ def post_image(request, post_id):
     post = Post.objects.get(id=post_id)
     post_image = Postimg(file=request.FILES['post_image'], post=post)
     post_image.save()
-    print(post_id)
     return redirect(f'/edit_post/{post_id}')
 
 def delete_comment(request, comment_id):

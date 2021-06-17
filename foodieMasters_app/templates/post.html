@@ -21,6 +21,9 @@
 					style="border-radius: 20px;"
 				>
 					<h1 class="text-white display-3">POST YOUR FAVORITE FOOD</h1>
+					{% for post in posts %}
+					<p>{{post.id}}</p>
+					{% endfor %}
 					{% csrf_token %}
 					<div class="form-group">
 						<label for="title">Title</label>
